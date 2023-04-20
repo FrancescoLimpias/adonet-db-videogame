@@ -14,6 +14,7 @@ namespace adonet_db_videogame
             INSERT,
             SEARCHID,
             SEARCHNAME,
+            DELETE,
             EXIT
         }
 
@@ -106,6 +107,34 @@ namespace adonet_db_videogame
                     {
                         Console.WriteLine("No videogames found...");
                     }
+                    break;
+                case Operation.DELETE:
+                    Console.Write("Insert an EXISTING ID: ");
+
+                    //Ask for ID and look if ID is EXISTENT -> CONVERT to VIDEOGAME
+                    Videogame gameToDelete = UConsole.AskStringToCast<Videogame>((input) =>
+                    {
+                        Videogame? game = VideogamesManager.SearchById(Convert.ToInt64(input));
+                        /* Keeps asking for a ID until 
+                         * 1) given input is convertible to long
+                         * 2) long is an existent ID
+                         */
+                        return game == null ? throw new NullReferenceException() : game;
+                    });
+
+                    //Ask for CONFIRMATION
+                    Console.Write($"Are you sure you want to delete {gameToDelete.Name}? (yes/no) ");
+                    bool confirmation = UConsole.AskYesNo();
+                    if (confirmation)
+                    {
+                        if (VideogamesManager.Delete(gameToDelete.ID))
+                            Console.WriteLine($"{gameToDelete.Name} successfully deleted!");
+                        else
+                            Console.WriteLine($"Error while trying to delete {gameToDelete.Name}");
+                    }
+                    else
+                        Console.WriteLine("Operation aborted...");
+
                     break;
                 case Operation.EXIT:
 
