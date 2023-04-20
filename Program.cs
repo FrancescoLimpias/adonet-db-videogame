@@ -12,6 +12,7 @@ namespace adonet_db_videogame
         enum Operation
         {
             INSERT,
+            SEARCHID,
             EXIT
         }
 
@@ -55,6 +56,7 @@ namespace adonet_db_videogame
                 {
                     return Enum.Parse<Operation>(input);
                 });
+            Console.WriteLine();
 
 
             //Operation SWITCH
@@ -74,10 +76,24 @@ namespace adonet_db_videogame
                         );
 
                     break;
+                case Operation.SEARCHID:
+
+                    Console.Write("Insert an ID: ");
+                    Videogame? videogame = VideogamesManager.SearchById(UConsole.AskLong());
+
+                    if (videogame != null)
+                    {
+                        Console.WriteLine($"[FOUND] Name: {videogame.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[NOT FOUND] No videogame for the given ID");
+                    }
+                    break;
                 case Operation.EXIT:
 
                     //Close SQL Connection
-                    Program.SQL.Close();
+                    SQL.Close();
 
                     //Bye to user, wait for the user to read the message
                     Console.WriteLine("\r\n\r\nBye!");
@@ -88,6 +104,9 @@ namespace adonet_db_videogame
                     break;
             }
 
+            //Wait before restarting window
+            Console.WriteLine("\r\nRestarting terminal in 3 seconds...");
+            System.Threading.Thread.Sleep(3000);
         }
     }
 }
