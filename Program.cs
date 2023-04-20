@@ -52,7 +52,18 @@ namespace adonet_db_videogame
             switch (operation)
             {
                 case Operation.INSERT:
-                    Console.WriteLine("INSERTION!!");
+
+                    Console.Write("Insert a name: ");
+
+                    //Attempt insertion and store result
+                    bool success = VideogamesManager.Insert(UConsole.AskString());
+
+                    Console.WriteLine(
+                        success ?
+                        "Videogame added."
+                        : "Error!"
+                        );
+
                     break;
             }
 
