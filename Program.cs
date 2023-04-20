@@ -13,6 +13,7 @@ namespace adonet_db_videogame
         {
             INSERT,
             SEARCHID,
+            SEARCHNAME,
             EXIT
         }
 
@@ -90,6 +91,22 @@ namespace adonet_db_videogame
                         Console.WriteLine("[NOT FOUND] No videogame for the given ID");
                     }
                     break;
+                case Operation.SEARCHNAME:
+
+                    Console.Write("Insert a name: ");
+                    List<Videogame> videogames = VideogamesManager.SearchByName(UConsole.AskString());
+
+                    if (videogames.Count > 0)
+                    {
+                        Console.WriteLine("\r\nID - VIDEOGAME");
+                        foreach (Videogame game in videogames)
+                            Console.WriteLine($" {game.ID} - {game.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No videogames found...");
+                    }
+                    break;
                 case Operation.EXIT:
 
                     //Close SQL Connection
@@ -97,7 +114,7 @@ namespace adonet_db_videogame
 
                     //Bye to user, wait for the user to read the message
                     Console.WriteLine("\r\n\r\nBye!");
-                    System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(2000);
 
                     //EXIT
                     System.Environment.Exit(0);
@@ -105,8 +122,8 @@ namespace adonet_db_videogame
             }
 
             //Wait before restarting window
-            Console.WriteLine("\r\nRestarting terminal in 3 seconds...");
-            System.Threading.Thread.Sleep(3000);
+            Console.WriteLine("\r\n\r\nPress any key to continue...");
+            Console.ReadKey();
         }
     }
 }
