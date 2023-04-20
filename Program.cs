@@ -11,6 +11,7 @@ namespace adonet_db_videogame
         //Operations
         enum Operation
         {
+            LIST,
             INSERT,
             SEARCHID,
             SEARCHNAME,
@@ -64,6 +65,22 @@ namespace adonet_db_videogame
             //Operation SWITCH
             switch (operation)
             {
+                case Operation.LIST:
+
+                    Console.WriteLine("Videogames list");
+                    List<Videogame> videogames = VideogamesManager.List();
+
+                    if (videogames.Count > 0)
+                    {
+                        Console.WriteLine("\r\nID - VIDEOGAME");
+                        foreach (Videogame game in videogames)
+                            Console.WriteLine($" {game.ID} - {game.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No videogames found...");
+                    }
+                    break;
                 case Operation.INSERT:
 
                     Console.Write("Insert a name: ");
@@ -95,12 +112,12 @@ namespace adonet_db_videogame
                 case Operation.SEARCHNAME:
 
                     Console.Write("Insert a name: ");
-                    List<Videogame> videogames = VideogamesManager.SearchByName(UConsole.AskString());
+                    List<Videogame> foundVideogames = VideogamesManager.SearchByName(UConsole.AskString());
 
-                    if (videogames.Count > 0)
+                    if (foundVideogames.Count > 0)
                     {
                         Console.WriteLine("\r\nID - VIDEOGAME");
-                        foreach (Videogame game in videogames)
+                        foreach (Videogame game in foundVideogames)
                             Console.WriteLine($" {game.ID} - {game.Name}");
                     }
                     else
@@ -143,7 +160,7 @@ namespace adonet_db_videogame
 
                     //Bye to user, wait for the user to read the message
                     Console.WriteLine("\r\n\r\nBye!");
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(1500);
 
                     //EXIT
                     System.Environment.Exit(0);

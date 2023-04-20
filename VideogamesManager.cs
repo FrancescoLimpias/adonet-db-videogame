@@ -13,7 +13,7 @@ namespace adonet_db_videogame
         {
             string query = "INSERT INTO videogames VALUES (@Name)";
 
-            SqlCommand command = new SqlCommand(query, Program.SQL);
+            using SqlCommand command = new SqlCommand(query, Program.SQL);
             command.Parameters.AddWithValue("@Name", videogameName);
 
             return command.ExecuteNonQuery() == 1;
@@ -23,7 +23,7 @@ namespace adonet_db_videogame
         {
             string query = "SELECT * FROM videogames WHERE id = @id";
 
-            SqlCommand command = new SqlCommand(query, Program.SQL);
+            using SqlCommand command = new SqlCommand(query, Program.SQL);
             command.Parameters.AddWithValue("@id", id);
 
             using SqlDataReader reader = command.ExecuteReader();
@@ -42,10 +42,10 @@ namespace adonet_db_videogame
         {
             List<Videogame> videogames = new List<Videogame>();
 
-            string query = "SELECT * FROM videogames WHERE name LIKE @Name";
+            string query = "SELECT * FROM videogames WHERE UPPER(name) LIKE @Name";
 
             SqlCommand command = new SqlCommand(query, Program.SQL);
-            command.Parameters.AddWithValue("@Name", $"%{name}%");
+            command.Parameters.AddWithValue("@Name", $"%{name.ToUpper()}%");
 
             using SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -60,7 +60,7 @@ namespace adonet_db_videogame
         {
             string query = "DELETE FROM videogames WHERE id = @Id";
 
-            SqlCommand command = new SqlCommand(query, Program.SQL);
+            using SqlCommand command = new SqlCommand(query, Program.SQL);
             command.Parameters.AddWithValue("@Id", id);
 
             return command.ExecuteNonQuery() > 0;
@@ -76,7 +76,7 @@ namespace adonet_db_videogame
             command.Connection = Program.SQL;
             command.CommandText = selectionQuery;
 
-            SqlDataReader reader = command.ExecuteReader();
+            using SqlDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
             {
