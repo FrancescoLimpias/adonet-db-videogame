@@ -11,11 +11,11 @@ namespace adonet_db_videogame
         /* ***************
          * VIDEOGAME's PROPERTIES
          */
-        public int ID { get; }
+        public long ID { get; }
         public string Name { get; set; }
 
         //CONSTRUCTOR
-        internal Videogame(int id, string name)
+        internal Videogame(long id, string name)
         {
             ID = id;
             Name = name;

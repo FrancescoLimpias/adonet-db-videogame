@@ -19,6 +19,25 @@ namespace adonet_db_videogame
             return command.ExecuteNonQuery() == 1;
         }
 
+        internal static Videogame? SearchById(long id)
+        {
+            string query = "SELECT * FROM videogames WHERE id = @id";
+
+            SqlCommand command = new SqlCommand(query, Program.SQL);
+            command.Parameters.AddWithValue("@id", id);
+
+            using SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                return new Videogame(reader.GetInt64(0), reader.GetString(1));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         static void firstTest()
         {
 
