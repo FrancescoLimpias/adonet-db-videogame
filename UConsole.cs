@@ -85,5 +85,9 @@ namespace adonet_db_videogame
         {
             return AskStringToCast((input) => Convert.ToInt32(input));
         }
+        internal static long AskLong()
+        {
+            return AskStringToCast((input) => Convert.ToInt64(input));
+        }
     }
 }
