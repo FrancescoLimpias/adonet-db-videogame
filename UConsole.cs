@@ -80,7 +80,7 @@ namespace adonet_db_videogame
             return result;
         }
 
-        //ASK FOR INPUT STRING AND CAST TO INTEGER
+        //ASK FOR INPUT STRING AND CAST TO ...
         internal static int AskInt()
         {
             return AskStringToCast((input) => Convert.ToInt32(input));
@@ -88,6 +88,18 @@ namespace adonet_db_videogame
         internal static long AskLong()
         {
             return AskStringToCast((input) => Convert.ToInt64(input));
+        }
+        internal static bool AskYesNo()
+        {
+            return AskStringToCast((input) =>
+            {
+                input = input.ToUpper();
+                if (input.Equals("YES") || input.Equals("Y"))
+                    return true;
+                if (input.Equals("NO") || input.Equals("N"))
+                    return false;
+                throw new Exception();
+            });
         }
     }
 }
