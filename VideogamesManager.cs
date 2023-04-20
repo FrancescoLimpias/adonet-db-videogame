@@ -56,9 +56,19 @@ namespace adonet_db_videogame
             return videogames;
         }
 
-        static void firstTest()
+        internal static bool Delete(long id)
         {
+            string query = "DELETE FROM videogames WHERE id = @Id";
 
+            SqlCommand command = new SqlCommand(query, Program.SQL);
+            command.Parameters.AddWithValue("@Id", id);
+
+            return command.ExecuteNonQuery() > 0;
+        }
+
+        internal static List<Videogame> List()
+        {
+            List<Videogame> videogames = new();
             string selectionQuery = "SELECT * FROM videogames";
 
             //Build SQL command
@@ -66,24 +76,14 @@ namespace adonet_db_videogame
             command.Connection = Program.SQL;
             command.CommandText = selectionQuery;
 
-            //Attempt command execution
-            try
-            {
-                SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
-                {
-                    Console.WriteLine(
-                        $"ID: {reader.GetInt64(0)}\r\n"
-                        + $"Name: {reader.GetString(1)}\r\n"
-                        + "--------------------\r\n\r\n"
-                        );
-                }
-            }
-            catch (Exception e)
+            while (reader.Read())
             {
-                Console.WriteLine("[ERR] " + e.Message);
+                videogames.Add(new Videogame(reader.GetInt64(0), reader.GetString(1)));
             }
+
+            return videogames;
         }
     }
 }
