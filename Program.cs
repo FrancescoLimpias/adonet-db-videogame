@@ -11,15 +11,12 @@ namespace adonet_db_videogame
         //Operations
         enum Operation
         {
-            INSERT
+            INSERT,
+            EXIT
         }
 
         static void Main(string[] args)
         {
-
-            //Greet the user
-            Console.WriteLine("Welcome to VIDEOGAMES MANAGER!");
-
 
             //Attempt connection to database
             try
@@ -33,6 +30,18 @@ namespace adonet_db_videogame
                 throw new Exception(ERROR);
             }
 
+            //Ask user for a prompt
+            while (true)
+                AskPrompt();
+        }
+
+        //Show Prompt video
+        static void AskPrompt()
+        {
+            Console.Clear();
+
+            //Greet the user
+            Console.WriteLine("Welcome to VIDEOGAMES MANAGER!");
 
             //Ask for operation to perform
             Console.WriteLine("\r\nWhich operation would you like to do?");
@@ -65,11 +74,20 @@ namespace adonet_db_videogame
                         );
 
                     break;
+                case Operation.EXIT:
+
+                    //Close SQL Connection
+                    Program.SQL.Close();
+
+                    //Bye to user, wait for the user to read the message
+                    Console.WriteLine("\r\n\r\nBye!");
+                    System.Threading.Thread.Sleep(1000);
+
+                    //EXIT
+                    System.Environment.Exit(0);
+                    break;
             }
 
-
-            //Close the connection
-            SQL.Close();
         }
     }
 }
