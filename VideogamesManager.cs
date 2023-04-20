@@ -38,6 +38,24 @@ namespace adonet_db_videogame
             }
         }
 
+        internal static List<Videogame> SearchByName(string name)
+        {
+            List<Videogame> videogames = new List<Videogame>();
+
+            string query = "SELECT * FROM videogames WHERE name LIKE @Name";
+
+            SqlCommand command = new SqlCommand(query, Program.SQL);
+            command.Parameters.AddWithValue("@Name", $"%{name}%");
+
+            using SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                videogames.Add(new Videogame(reader.GetInt64(0), reader.GetString(1)));
+            }
+
+            return videogames;
+        }
+
         static void firstTest()
         {
 
