@@ -18,6 +18,9 @@ namespace adonet_db_videogame
         internal Videogame(long id, string name)
         {
             ID = id;
+
+            if (name.Length > 50)
+                throw new ArgumentException($"The given name is too long (max: 50) [{name}]");
             Name = name;
         }
 

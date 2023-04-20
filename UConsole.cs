@@ -38,7 +38,7 @@ namespace adonet_db_videogame
         private static void ResumeCursorPosition()
         {
             Console.SetCursorPosition(lockedCursorPosition.Value.left, lockedCursorPosition.Value.top);
-            Console.Write(new string(' ', 10));
+            Console.Write(new string(' ', 100));
             Console.SetCursorPosition(lockedCursorPosition.Value.left, lockedCursorPosition.Value.top);
         }
 

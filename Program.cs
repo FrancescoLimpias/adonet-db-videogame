@@ -83,10 +83,15 @@ namespace adonet_db_videogame
                     break;
                 case Operation.INSERT:
 
-                    Console.Write("Insert a name: ");
+                    Console.Write("Insert a name (max 50 chars!): ");
 
                     //Attempt insertion and store result
-                    bool success = VideogamesManager.Insert(UConsole.AskString());
+                    bool success = VideogamesManager.Insert(UConsole.AskStringToCast((input) =>
+                    {
+                        if (input.Length > 50)
+                            throw new Exception();
+                        return input;
+                    }));
 
                     Console.WriteLine(
                         success ?
